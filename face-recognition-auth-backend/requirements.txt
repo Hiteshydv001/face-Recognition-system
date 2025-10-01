@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+pydantic
+pydantic-settings  
+numpy
+opencv-python-headless
+onnxruntime
+insightface==0.7.3
+python-multipart
