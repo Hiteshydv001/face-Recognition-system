@@ -104,7 +104,8 @@ export const LockScreen = ({ onAuthSuccess }: Props) => {
     stopCamera();
     
     try {
-      const response = await fetch('http://localhost:8000/api/enroll', {
+      const apiUrl = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'}/api/enroll`;
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_id: userId, images }),
@@ -143,7 +144,8 @@ export const LockScreen = ({ onAuthSuccess }: Props) => {
     stopCamera();
     
     try {
-      const response = await fetch('http://localhost:8000/api/verify', {
+      const apiUrl = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'}/api/verify`;
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_id: userId, image }),
