@@ -14,6 +14,10 @@ class Settings(BaseSettings):
     # 'CUDA' for GPU or 'CPU' for CPU.
     PROVIDER: str = "CPU"
 
+    # Comma-separated list of allowed origins for CORS, or '*' to allow all.
+    # Example: "https://example.com,https://app.example.com"
+    ALLOWED_ORIGINS: str = "*"
+
     class Config:
         case_sensitive = True
 

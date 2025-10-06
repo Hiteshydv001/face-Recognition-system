@@ -1,9 +1,9 @@
 from fastapi import FastAPI
-# ADD THIS IMPORT
-from fastapi.middleware.cors import CORSMiddleware 
+from fastapi.middleware.cors import CORSMiddleware
 from .db import models
 from .db.database import engine
 from .api import router as api_router
+from .core.config import settings
 
 # Create all database tables
 models.Base.metadata.create_all(bind=engine)
@@ -18,22 +18,22 @@ app = FastAPI(
 # This is the "guest list" for your nightclub.
 # It tells the browser which origins are allowed to make requests.
 
-# Define the list of allowed origins.
-# For development, you can allow all origins with ["*"].
-# For production, you should be specific.
-origins = [
-    "https://preview--face-flux-scan.lovable.app", # The origin of your deployed frontend
-    "http://localhost",
-    "http://localhost:3000", # Example for a local React dev server
-    "http://127.0.0.1:5500"  # Example for VS Code Live Server
-]
+# Read allowed origins from settings. Supports:
+# - '*' to allow all origins
+# - comma-separated origins (no spaces required)
+allowed = settings.ALLOWED_ORIGINS or "*"
+if allowed.strip() == "*":
+    allow_origins = ["*"]
+else:
+    # Split by comma and strip whitespace
+    allow_origins = [o.strip() for o in allowed.split(",") if o.strip()]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # Allows specific origins
-    allow_credentials=True, # Allows cookies (not used in this MVP, but good practice)
-    allow_methods=["*"],    # Allows all methods (GET, POST, etc.)
-    allow_headers=["*"],    # Allows all headers
+    allow_origins=allow_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 # --- END OF CORS CONFIGURATION ---
 
