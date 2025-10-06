@@ -104,7 +104,8 @@ export const LockScreen = ({ onAuthSuccess }: Props) => {
     stopCamera();
     
     try {
-      const apiUrl = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'}/api/enroll`;
+      const baseUrl = String(import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000').replace(/\/+$/, '');
+      const apiUrl = `${baseUrl}/api/enroll`;
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -144,7 +145,8 @@ export const LockScreen = ({ onAuthSuccess }: Props) => {
     stopCamera();
     
     try {
-      const apiUrl = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'}/api/verify`;
+      const baseUrl = String(import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000').replace(/\/+$/, '');
+      const apiUrl = `${baseUrl}/api/verify`;
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

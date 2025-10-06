@@ -40,4 +40,6 @@ ENV HOME=/home/appuser
 EXPOSE 8000
 
 # Entrypoint: run gunicorn with uvicorn workers
-CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "app.main:app", "--bind", "0.0.0.0:8000"]
+# Using 1 worker to prevent memory issues on free-tier hosts (Railway, Render)
+# Each worker loads the heavy InsightFace model (~250MB), so multiple workers can exceed memory limits
+CMD ["gunicorn", "-w", "1", "-k", "uvicorn.workers.UvicornWorker", "app.main:app", "--bind", "0.0.0.0:8000"]
